@@ -11,5 +11,5 @@ public interface ProductRatingRepository extends CrudRepository<ProductRatingEnt
     ProductRatingEntity findByProductIdAndUserIdAndOrderId(String productId,String userId,String orderId);
 
     @Query(value = "SELECT AVG(rating) FROM ProductRatingEntity WHERE productId = ?1")
-    double getRating(String productId);
+    Double getRating(String productId);
 }
