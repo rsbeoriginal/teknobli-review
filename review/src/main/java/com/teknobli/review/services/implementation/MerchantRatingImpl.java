@@ -2,6 +2,7 @@ package com.teknobli.review.services.implementation;
 
 import com.teknobli.review.dto.MerchantRatingDTO;
 import com.teknobli.review.entity.MerchantRatingEntity;
+import com.teknobli.review.merchantmicroservice.EndPoints;
 import com.teknobli.review.repository.MerchantRatingRepository;
 import com.teknobli.review.services.MerchantRatingService;
 import org.springframework.beans.BeanUtils;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @Transactional(readOnly = true,propagation = Propagation.REQUIRES_NEW)
@@ -25,7 +27,18 @@ public class MerchantRatingImpl implements MerchantRatingService {
         MerchantRatingEntity merchantRatingEntityDb=merchantRatingRepository.save(merchantRatingEntity);
         MerchantRatingDTO merchantRatingDTODb = new MerchantRatingDTO();
         BeanUtils.copyProperties(merchantRatingEntityDb, merchantRatingDTODb);
+
+        //send rating to merchant microservice
+        sendRatingToMerchantService(merchantRatingDTODb.getMerchantId(),getRating(merchantRatingDTODb.getMerchantId()));
+
         return merchantRatingDTODb;
+    }
+
+    private void sendRatingToMerchantService(String merchantId,Double newRating) {
+        RestTemplate restTemplate = new RestTemplate();
+        String URL = EndPoints.BASE_URL + EndPoints.createUpdateRatingURL(merchantId,newRating);
+        System.out.println(URL);
+        restTemplate.put(URL, String.class);
     }
 
     @Override
