@@ -2,9 +2,12 @@ package com.teknobli.review.controller;
 
 
 import com.teknobli.review.dto.ProductRatingDTO;
+import com.teknobli.review.entity.ProductRatingEntity;
 import com.teknobli.review.services.ProductRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -34,5 +37,8 @@ public class ProductRatingController {
         return productRatingService.getUserRating(productRatingDTO);
     }
 
-
+    @GetMapping("/getReviews/{productId}")
+    public List<ProductRatingEntity> getReviews(@PathVariable("productId")String productId){
+        return productRatingService.getReviews(productId);
+    }
 }

@@ -1,6 +1,9 @@
 package com.teknobli.review.services;
 
 import com.teknobli.review.dto.ProductRatingDTO;
+import com.teknobli.review.entity.ProductRatingEntity;
+
+import java.util.List;
 
 public interface ProductRatingService {
 
@@ -11,4 +14,6 @@ public interface ProductRatingService {
     ProductRatingDTO select(String productId,String userId,String orderId);
 
     Double getUserRating(ProductRatingDTO productRatingDTO);
+
+    List<ProductRatingEntity> getReviews(String productId);
 }

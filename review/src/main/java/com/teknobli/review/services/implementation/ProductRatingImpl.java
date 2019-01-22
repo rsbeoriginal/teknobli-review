@@ -1,5 +1,8 @@
 package com.teknobli.review.services.implementation;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import com.teknobli.review.dto.ProductRatingDTO;
 
 import com.teknobli.review.entity.ProductRatingEntity;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true,propagation = Propagation.REQUIRES_NEW)
@@ -62,6 +67,20 @@ public class ProductRatingImpl implements ProductRatingService {
             return rating;
         }
         return -1.d;
+    }
+
+    @Override
+    public List<ProductRatingEntity> getReviews(String productId) {
+        List<ProductRatingEntity> productRatingEntityList =productRatingRepository.getReviews(productId);
+        for(ProductRatingEntity productRatingEntity:productRatingEntityList){
+            try {
+                UserRecord userRecord = FirebaseAuth.getInstance().getUser(productRatingEntity.getUserId());
+                productRatingEntity.setUserId(userRecord.getDisplayName());
+            } catch (FirebaseAuthException e) {
+                e.printStackTrace();
+            }
+        }
+        return productRatingEntityList;
     }
 
 
