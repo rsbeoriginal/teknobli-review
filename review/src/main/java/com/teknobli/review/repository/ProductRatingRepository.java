@@ -1,5 +1,6 @@
 package com.teknobli.review.repository;
 
+import com.teknobli.review.dto.ProductRatingDTO;
 import com.teknobli.review.entity.ProductRatingEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -12,4 +13,7 @@ public interface ProductRatingRepository extends CrudRepository<ProductRatingEnt
 
     @Query(value = "SELECT AVG(rating) FROM ProductRatingEntity WHERE productId = ?1")
     Double getRating(String productId);
+
+    @Query("SELECT rating FROM ProductRatingEntity WHERE (orderId = ?1 AND productId =?2 AND userId =?3)")
+    Double getUserProductRating(String orderId,String productId,String userId);
 }

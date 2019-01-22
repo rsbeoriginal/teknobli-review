@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/product")
+@CrossOrigin
 public class ProductRatingController {
 
     @Autowired
@@ -18,13 +19,20 @@ public class ProductRatingController {
         return productRatingService.add(productRatingDTO);
     }
 
-    @GetMapping("select/{productId}/{userId}/{orderId}")
+    @GetMapping("/select/{productId}/{userId}/{orderId}")
     public ProductRatingDTO select(@PathVariable("productId") String productId,@PathVariable("userId") String userId,@PathVariable("orderId")String orderId){
         return productRatingService.select(productId,userId,orderId);
     }
 
-    @GetMapping("getRating/{productId}")
+    @GetMapping("/getRating/{productId}")
     public Double getRating(@PathVariable("productId") String productId){
         return productRatingService.getRating(productId);
     }
+
+    @PostMapping("/getUserRating")
+    public Double getUserRating(@RequestBody ProductRatingDTO productRatingDTO){
+        return productRatingService.getUserRating(productRatingDTO);
+    }
+
+
 }

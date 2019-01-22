@@ -10,4 +10,5 @@ public interface ProductRatingService {
 
     ProductRatingDTO select(String productId,String userId,String orderId);
 
+    Double getUserRating(ProductRatingDTO productRatingDTO);
 }

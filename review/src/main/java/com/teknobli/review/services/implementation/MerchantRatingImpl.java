@@ -22,6 +22,8 @@ public class MerchantRatingImpl implements MerchantRatingService {
     @Override
     @Transactional(readOnly = false)
     public MerchantRatingDTO add(MerchantRatingDTO merchantRatingDTO) {
+
+        System.out.println(merchantRatingDTO);
         MerchantRatingEntity merchantRatingEntity = new MerchantRatingEntity();
         BeanUtils.copyProperties(merchantRatingDTO,merchantRatingEntity);
         MerchantRatingEntity merchantRatingEntityDb=merchantRatingRepository.save(merchantRatingEntity);

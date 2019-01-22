@@ -22,6 +22,7 @@ public class ProductRatingImpl implements ProductRatingService {
     @Override
     @Transactional(readOnly = false)
     public ProductRatingDTO add(ProductRatingDTO productRatingDTO) {
+        System.out.println(productRatingDTO);
         ProductRatingEntity productRatingEntity= new ProductRatingEntity();
         BeanUtils.copyProperties(productRatingDTO,productRatingEntity);
         ProductRatingDTO productRatingDTODb = new ProductRatingDTO();
@@ -36,7 +37,7 @@ public class ProductRatingImpl implements ProductRatingService {
     private void sendRatingToProductService(String productId, Double newRating) {
         RestTemplate restTemplate = new RestTemplate();
 //        String URL = ProductApi.BASE_URL + EndPoints.createUpdateRatingURL(productId,newRating);
-        String URL = "http://172.16.20.78:8000/product/updaterating/"+productId+"/"+newRating;
+        String URL = "http://localhost:8002/product/updaterating/"+productId+"/"+newRating;
         System.out.println(URL);
         restTemplate.put(URL, String.class);
     }
@@ -52,4 +53,16 @@ public class ProductRatingImpl implements ProductRatingService {
         BeanUtils.copyProperties(productRatingRepository.findByProductIdAndUserIdAndOrderId(productId,userId,orderId),productRatingDTO);
         return productRatingDTO;
     }
+
+    @Override
+    public Double getUserRating(ProductRatingDTO productRatingDTO) {
+        Double rating = productRatingRepository.getUserProductRating(productRatingDTO.getOrderId(),productRatingDTO.getProductId(),productRatingDTO.getUserId());
+        System.out.println("getUserRating(): " + rating);
+        if(rating!=null){
+            return rating;
+        }
+        return -1.d;
+    }
+
+
 }
