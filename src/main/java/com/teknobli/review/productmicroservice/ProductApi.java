@@ -2,7 +2,7 @@ package com.teknobli.review.productmicroservice;
 
 public class ProductApi {
 
-    public static final String BASE_URL = "http://localhost:8080";
+    public static final String BASE_URL = "https://teknobli-product.herokuapp.com/";
     public static final String UPDATE_RATING = "/product/updateRating/";
 
 

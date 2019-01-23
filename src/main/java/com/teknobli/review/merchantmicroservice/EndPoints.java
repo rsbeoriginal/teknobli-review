@@ -2,7 +2,7 @@ package com.teknobli.review.merchantmicroservice;
 
 public class EndPoints {
 
-    public static final String BASE_URL = "http://localhost:8080";
+    public static final String BASE_URL = "https://teknobli-merchant.herokuapp.com/";
 
     public static final String UPDATE_RATING = "/merchant/updateRating/";
 

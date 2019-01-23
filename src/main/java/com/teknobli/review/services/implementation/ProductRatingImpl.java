@@ -6,6 +6,7 @@ import com.google.firebase.auth.UserRecord;
 import com.teknobli.review.dto.ProductRatingDTO;
 
 import com.teknobli.review.entity.ProductRatingEntity;
+import com.teknobli.review.productmicroservice.ProductApi;
 import com.teknobli.review.repository.ProductRatingRepository;
 import com.teknobli.review.services.ProductRatingService;
 import org.springframework.beans.BeanUtils;
@@ -42,7 +43,8 @@ public class ProductRatingImpl implements ProductRatingService {
     private void sendRatingToProductService(String productId, Double newRating) {
         RestTemplate restTemplate = new RestTemplate();
 //        String URL = ProductApi.BASE_URL + EndPoints.createUpdateRatingURL(productId,newRating);
-        String URL = "http://localhost:8002/product/updaterating/"+productId+"/"+newRating;
+//        String URL = "http://localhost:8002/product/updaterating/"+productId+"/"+newRating;
+        String URL = ProductApi.BASE_URL + ProductApi.UPDATE_RATING +productId +"/"+newRating;
         System.out.println(URL);
         restTemplate.put(URL, String.class);
     }
