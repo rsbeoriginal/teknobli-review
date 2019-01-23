@@ -1,6 +1,9 @@
 package com.teknobli.review.controller;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import com.teknobli.review.dto.ProductRatingDTO;
 import com.teknobli.review.entity.ProductRatingEntity;
 import com.teknobli.review.services.ProductRatingService;
@@ -19,7 +22,13 @@ public class ProductRatingController {
 
     @PostMapping("/add")
     public ProductRatingDTO add(@RequestBody ProductRatingDTO productRatingDTO){
-        return productRatingService.add(productRatingDTO);
+        ProductRatingDTO res= new ProductRatingDTO();
+        if(decodeToken(productRatingDTO.getIdToken()).equals(productRatingDTO.getUserId())) {
+            return productRatingService.add(productRatingDTO);
+        }else{
+            res.setIdToken("Authentication failure");
+        }
+        return res;
     }
 
     @GetMapping("/select/{productId}/{userId}/{orderId}")
@@ -40,5 +49,15 @@ public class ProductRatingController {
     @GetMapping("/getReviews/{productId}")
     public List<ProductRatingEntity> getReviews(@PathVariable("productId")String productId){
         return productRatingService.getReviews(productId);
+    }
+
+    private String decodeToken(String idToken) {
+        try {
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            return decodedToken.getUid();
+        } catch (FirebaseAuthException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

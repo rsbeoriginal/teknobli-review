@@ -55,4 +55,14 @@ public class MerchantRatingImpl implements MerchantRatingService {
         BeanUtils.copyProperties(merchantRatingRepository.findByMerchantIdAndUserIdAndOrderId(merchantId,userId,orderId),merchantRatingDTO);
         return merchantRatingDTO;
     }
+
+    @Override
+    public Double getUserRating(MerchantRatingDTO merchantRatingDTO) {
+        Double rating = merchantRatingRepository.getUserMerchantRating(merchantRatingDTO.getOrderId(),merchantRatingDTO.getMerchantId(),merchantRatingDTO.getUserId());
+        System.out.println("getUserMerchantRating(): " + rating);
+        if(rating!=null){
+            return rating;
+        }
+        return -1.d;
+    }
 }

@@ -14,4 +14,7 @@ public interface MerchantRatingRepository extends CrudRepository<MerchantRatingE
 
     @Query(value = "SELECT AVG(rating) FROM MerchantRatingEntity WHERE merchantId = ?1")
     double getRating(String merchantId);
+
+    @Query("SELECT rating FROM MerchantRatingEntity WHERE (orderId = ?1 AND merchantId =?2 AND userId =?3)")
+    Double getUserMerchantRating(String orderId, String merchantId, String userId);
 }

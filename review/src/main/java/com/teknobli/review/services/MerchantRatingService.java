@@ -10,4 +10,6 @@ public interface MerchantRatingService {
     Double getRating(String merchantId);
 
     MerchantRatingDTO select(String merchantId,String userId,String orderId);
+
+    Double getUserRating(MerchantRatingDTO merchantRatingDTO);
 }

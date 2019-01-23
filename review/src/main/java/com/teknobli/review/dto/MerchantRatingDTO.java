@@ -1,12 +1,21 @@
 package com.teknobli.review.dto;
 
 public class MerchantRatingDTO{
+	private String idToken;
 	private String merchantId;
 	private String orderId;
 	private String review;
 	private String ratingId;
 	private int rating;
 	private String userId;
+
+	public String getIdToken() {
+		return idToken;
+	}
+
+	public void setIdToken(String idToken) {
+		this.idToken = idToken;
+	}
 
 	public void setMerchantId(String merchantId){
 		this.merchantId = merchantId;

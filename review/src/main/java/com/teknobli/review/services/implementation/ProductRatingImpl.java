@@ -62,7 +62,7 @@ public class ProductRatingImpl implements ProductRatingService {
     @Override
     public Double getUserRating(ProductRatingDTO productRatingDTO) {
         Double rating = productRatingRepository.getUserProductRating(productRatingDTO.getOrderId(),productRatingDTO.getProductId(),productRatingDTO.getUserId());
-        System.out.println("getUserRating(): " + rating);
+        System.out.println("getUserProductRating(): " + rating);
         if(rating!=null){
             return rating;
         }
